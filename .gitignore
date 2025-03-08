@@ -1,0 +1,13 @@
+# Project files
+package/
+*.tar.gz
+
+# IDEs
+.vscode/
+*.swo
+*.swp
+.vimrc
+.nvimrc
+
+# OS
+.DS_STORE
