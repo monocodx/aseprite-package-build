@@ -12,7 +12,10 @@ Update the `build.cfg` file to set the Aseprite version and build target platfor
 
 TARGET=opensuse-tumbleweed
 ```
-Find the Aseprite version from [Aseprite Github repository](https://github.com/aseprite/aseprite/releases).
+Find the Aseprite version from [Aseprite Github repository](https://github.com/aseprite/aseprite/releases).  
+
+> [!NOTE] 
+> The built binary tar.gz package is located in the project's `package` folder.  
 
 ### Runtime shared library
 Built Aseprite package requires the `libc++.so.1` shared library to run on the installed platform.  
