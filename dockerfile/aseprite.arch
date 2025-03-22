@@ -1,0 +1,100 @@
+# Copyright 2025 The Aseprite Package Build Authors.
+#
+# This instruction file is free software: you can redistribute it and/or modify it under the terms of the GNU
+# General Public License as published by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with this program. If not, see
+# <https://www.gnu.org/licenses/>.
+
+
+# Note: ARG instruction goes out of scope at the end of the build stage.
+# To use an argument in multiple stages, each stage must include the ARG instruction.
+
+## stage-0
+FROM archlinux:latest AS base
+
+RUN pacman -Syu --noconfirm
+
+## stage-1
+FROM base AS source
+
+# include ARG instruction
+ARG NAME
+ARG VERSION
+
+RUN pacman -S --noconfirm \
+wget unzip
+
+WORKDIR /tmp
+
+# source [https://github.com/aseprite/aseprite/releases]
+RUN wget https://github.com/aseprite/aseprite/releases/download/v${VERSION}/Aseprite-v${VERSION}-Source.zip \
+# source [https://github.com/aseprite/skia/releases/tag/m102-861e4743af]
+&& wget https://github.com/aseprite/skia/releases/download/m102-861e4743af/Skia-Linux-Release-x64-libc++.zip
+
+# unzip source and build dependency libs
+RUN unzip -d ${NAME} Aseprite-v${VERSION}-Source.zip \
+&& unzip -d skia Skia-Linux-Release-x64-libc++.zip
+
+# create build directory structure
+RUN mkdir ${NAME}/build \
+&& mkdir ${NAME}/deps \
+&& mv skia ${NAME}/deps
+
+## stage-2
+FROM base AS build
+
+# include ARG instruction
+ARG NAME
+
+# copy from stage-1
+COPY --from=source /tmp/${NAME} /tmp/${NAME}
+
+# reference [https://github.com/aseprite/aseprite/blob/main/INSTALL.md#linux-dependencies]
+RUN pacman -S --noconfirm \
+gcc clang cmake ninja \
+libc++ libx11 libxcursor \
+mesa-libgl fontconfig libwebp \
+# Xinput library
+xorg-xinput
+
+WORKDIR /tmp/${NAME}
+
+ENV CC=clang
+ENV CXX=clang++
+
+RUN cmake \
+-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+-DCMAKE_CXX_FLAGS:STRING=-stdlib=libc++ \
+-DCMAKE_EXE_LINKER_FLAGS:STRING=-stdlib=libc++ \
+-DLAF_BACKEND=skia \
+-DSKIA_DIR=/tmp/${NAME}/deps/skia \
+-DSKIA_LIBRARY_DIR=/tmp/${NAME}/deps/skia/out/Release-x64 \
+-DSKIA_LIBRARY=/tmp/${NAME}/deps/skia/out/Release-x64/libskia.a \
+-G Ninja \
+-B build
+
+WORKDIR /tmp/${NAME}/build
+
+RUN ninja aseprite
+
+## stage-3
+FROM archlinux:latest
+
+# include ARG instruction
+ARG NAME
+ARG VERSION
+ARG TARGET
+
+# copy from stage-2
+COPY --from=build /tmp/${NAME}/build/bin /home/${NAME}/bin
+
+WORKDIR /home
+
+# create compressed tar package
+RUN tar -czvf ${NAME}-${VERSION}-${TARGET}-x64.tar.gz ${NAME}
