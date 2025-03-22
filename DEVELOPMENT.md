@@ -1,8 +1,7 @@
 # Development Guidelines
 
-> **Important**  
->  
-> All commits should be tested and built without errors before committing and pushing to the remote branch.
+> [!IMPORTANT] 
+> All commits should be tested and built without errors before committing and pushing to the remote branch.  
 
 ## Commit Message
 
