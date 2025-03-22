@@ -8,7 +8,7 @@ Dockerfile instructions to build Aseprite package for Linux distributions.
 Update the `build.cfg` file to set the Aseprite version and build target platform, then run the `build.sh` script.
 ```
 # target options:
-# opensuse-tumbleweed, opensuse-leap, fedora-rawhide, fedora, debian-stable
+# opensuse-tumbleweed, opensuse-leap, fedora-rawhide, fedora, debian-stable, arch
 
 TARGET=opensuse-tumbleweed
 ```
@@ -33,6 +33,11 @@ sudo apt-get install libc++1
 On Fedora:  
 ```
 sudo dnf install libcxx
+```
+
+On Arch:  
+```
+sudo pacman -S libc++
 ```
 
 ### Development
