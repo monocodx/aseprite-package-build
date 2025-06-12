@@ -28,12 +28,12 @@ WORKDIR /tmp
 
 # source [https://github.com/aseprite/aseprite/releases]
 RUN wget https://github.com/aseprite/aseprite/releases/download/v${VERSION}/Aseprite-v${VERSION}-Source.zip \
-# source [https://github.com/aseprite/skia/releases/tag/m102-861e4743af]
-&& wget https://github.com/aseprite/skia/releases/download/m102-861e4743af/Skia-Linux-Release-x64-libc++.zip
+# source [https://github.com/aseprite/skia/releases/tag/m124-08a5439a6b]
+&& wget https://github.com/aseprite/skia/releases/download/m124-08a5439a6b/Skia-Linux-Release-x64.zip
 
 # unzip source and build dependency libs
 RUN unzip -d ${NAME} Aseprite-v${VERSION}-Source.zip \
-&& unzip -d skia Skia-Linux-Release-x64-libc++.zip
+&& unzip -d skia Skia-Linux-Release-x64.zip
 
 # create build structure
 RUN mkdir ${NAME}/build \
@@ -63,8 +63,8 @@ ENV CXX=clang++
 
 RUN cmake \
 -DCMAKE_BUILD_TYPE=RelWithDebInfo \
--DCMAKE_CXX_FLAGS:STRING=-stdlib=libc++ \
--DCMAKE_EXE_LINKER_FLAGS:STRING=-stdlib=libc++ \
+-DCMAKE_CXX_FLAGS:STRING=-stdlib=libstdc++ \
+-DCMAKE_EXE_LINKER_FLAGS:STRING=-stdlib=libstdc++ \
 -DLAF_BACKEND=skia \
 -DSKIA_DIR=/tmp/${NAME}/deps/skia \
 -DSKIA_LIBRARY_DIR=/tmp/${NAME}/deps/skia/out/Release-x64 \
