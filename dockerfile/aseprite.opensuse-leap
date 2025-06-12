@@ -43,6 +43,9 @@ RUN mkdir ${NAME}/build \
 && mkdir ${NAME}/deps \
 && mv skia ${NAME}/deps
 
+# fix fatal error: 'pnglibconf.h' file not found
+RUN cp ${NAME}/third_party/libpng/scripts/pnglibconf.h.prebuilt ${NAME}/third_party/libpng/pnglibconf.h
+
 ## stage-2
 FROM base AS build
 
