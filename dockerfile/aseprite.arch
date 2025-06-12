@@ -18,7 +18,7 @@
 ## stage-0
 FROM archlinux:latest AS base
 
-RUN pacman -Syu --noconfirm
+RUN pacman -Syu --noconfirm --disable-download-timeout
 
 ## stage-1
 FROM base AS source
@@ -27,7 +27,7 @@ FROM base AS source
 ARG NAME
 ARG VERSION
 
-RUN pacman -S --noconfirm \
+RUN pacman -S --noconfirm --disable-download-timeout \
 wget unzip
 
 WORKDIR /tmp
@@ -56,7 +56,7 @@ ARG NAME
 COPY --from=source /tmp/${NAME} /tmp/${NAME}
 
 # reference [https://github.com/aseprite/aseprite/blob/main/INSTALL.md#linux-dependencies]
-RUN pacman -S --noconfirm \
+RUN pacman -S --noconfirm --disable-download-timeout \
 gcc clang cmake ninja \
 libx11 libxcursor \
 mesa-libgl fontconfig libwebp \
