@@ -18,27 +18,7 @@ Find the Aseprite version from [Aseprite Github repository](https://github.com/a
 > The built binary tar.gz package is located in the project's `package` folder.  
 
 ### Runtime shared library
-Built Aseprite package requires the `libc++.so.1` shared library to run on the installed platform.  
-
-On openSUSE:  
-```
-sudo zypper install libc++1
-```
-
-On Debian/Ubuntu:  
-```
-sudo apt-get install libc++1
-```
-
-On Fedora:  
-```
-sudo dnf install libcxx
-```
-
-On Arch:  
-```
-sudo pacman -S libc++
-```
+The Aseprite package built based on `aseprite-m124` no longer requires `libc++.so.1` shared library.  
 
 ### Development
 Refer to [development guidelines](./DEVELOPMENT.md).
