@@ -21,13 +21,14 @@ FROM registry.opensuse.org/opensuse/tumbleweed:latest AS source
 # include ARG instruction
 ARG NAME
 ARG VERSION
+ARG TAG
 
 RUN zypper in -y --no-recommends wget unzip
 
 WORKDIR /tmp
 
 # source [https://github.com/aseprite/aseprite/releases]
-RUN wget https://github.com/aseprite/aseprite/releases/download/v${VERSION}/Aseprite-v${VERSION}-Source.zip \
+RUN wget https://github.com/aseprite/aseprite/releases/download/v${TAG}/Aseprite-v${VERSION}-Source.zip \
 # source [https://github.com/aseprite/skia/releases/tag/m124-08a5439a6b]
 && wget https://github.com/aseprite/skia/releases/download/m124-08a5439a6b/Skia-Linux-Release-x64.zip
 

@@ -26,11 +26,12 @@ FROM base AS source
 # include ARG instruction
 ARG NAME
 ARG VERSION
+ARG TAG
 
 WORKDIR /tmp
 
 # source [https://github.com/aseprite/aseprite/releases]
-RUN wget https://github.com/aseprite/aseprite/releases/download/v${VERSION}/Aseprite-v${VERSION}-Source.zip \
+RUN wget https://github.com/aseprite/aseprite/releases/download/v${TAG}/Aseprite-v${VERSION}-Source.zip \
 # source [https://github.com/aseprite/skia/releases/tag/m124-08a5439a6b]
 && wget https://github.com/aseprite/skia/releases/download/m124-08a5439a6b/Skia-Linux-Release-x64.zip
 

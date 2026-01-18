@@ -22,7 +22,7 @@ IMAGE_TAG="build.package/aseprite:$TARGET"
 CONTAINER="aseprite_$TARGET"
 
 # build package
-docker build --build-arg NAME=$NAME --build-arg VERSION=$VERSION --build-arg TARGET=$TARGET --no-cache -f dockerfile/aseprite.$TARGET -t $IMAGE_TAG .
+docker build --build-arg NAME=$NAME --build-arg VERSION=$VERSION --build-arg TAG=$TAG --build-arg TARGET=$TARGET --no-cache -f dockerfile/aseprite.$TARGET -t $IMAGE_TAG .
 
 docker run -d -w /home --name $CONTAINER $IMAGE_TAG
 
