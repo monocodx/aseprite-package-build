@@ -61,7 +61,7 @@ gcc-c++ clang cmake ninja \
 libX11-devel libXcursor-devel libXi-devel \
 Mesa-libGL-devel fontconfig-devel \
 # cmake dependencies
-ccache perl libopenssl-3-devel
+ccache perl libopenssl-3-devel libXrandr-devel
 
 WORKDIR /tmp/${NAME}
 

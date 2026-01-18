@@ -54,7 +54,7 @@ RUN dnf -y in --setopt=install_weak_deps=false \
 gcc-c++ libcxx-devel clang cmake ninja-build \ 
 libX11-devel libXcursor-devel libXi-devel mesa-libGL-devel fontconfig-devel \
 # cmake dependencies
-ccache 
+ccache libXrandr-devel
 
 WORKDIR /tmp/${NAME}
 

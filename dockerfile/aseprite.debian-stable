@@ -61,7 +61,7 @@ g++ clang cmake ninja-build \
 libx11-dev libxcursor-dev \
 libxi-dev libgl1-mesa-dev libfontconfig1-dev \
 # cmake dependencies
-ccache libssl-dev
+ccache libssl-dev libxrandr-dev
 
 WORKDIR /tmp/${NAME}
 
